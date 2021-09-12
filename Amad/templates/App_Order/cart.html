@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block body_block %}
+
+<div class="cart-table-area section-padding-100">
+  <div class="messages mt-2">
+    {% if messages %}
+      {% for message in messages %}
+        <div {% if message.tags %} class="alert alert-{{message.tags}}{% endif %}" role="alert">
+          {{message}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12 col-lg-8">
+              <div class="cart-title mt-50">
+                  <h2>Shopping Cart</h2>
+              </div>
+
+              <div class="cart-table clearfix">
+                  <table class="table table-responsive">
+                      <thead>
+                          <tr>
+                              <th>Name</th>
+                              <th>Price</th>
+                              <th>Quantity</th>
+                              <th>Remove</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for cart in carts %}
+                          <tr>
+                              <td class="cart_product_desc">
+                                  <h5>{{cart.item.name}}</h5>
+                              </td>
+                              <td class="price">
+                                  <span>{{cart.get_total}}</span>
+                              </td>
+                              <td class="qty">
+                                  <div class="qty-btn d-flex">
+                                      <div class="quantity">
+                                        <a  href="{% url 'App_Order:decrease' pk=cart.item.pk %}"><span class="badge badge-light"><i class="fa fa-minus"></i></span></a>
+                                        {{ cart.quantity }}
+                                        <a class="mr-2" href="{% url 'App_Order:increase' pk=cart.item.pk %}"> <span class="badge badge-light"> <i class="fa fa-plus"></i></span></a>
+                                      </div>
+                                  </div>
+                              </td>
+                              <td><a href="{% url 'App_Order:remove' pk=cart.item.pk %}" class="btn btn-danger btn-sm">Remove From Cart</a></td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <div class="col-12 col-lg-4">
+              <div class="cart-summary">
+                  <h5>Cart Total</h5>
+                  <ul class="summary-table">
+                      <li><span>subtotal:</span> <span>{{order.get_totals | floatformat:2 }}</span></li>
+                      <li><span>delivery:</span> <span>Free</span></li>
+                      <li><span>total:</span> <span>{{order.get_totals | floatformat:2 }}</span></li>
+                  </ul>
+                  <div class="cart-btn mt-100">
+                      <a href="{% url 'App_Payment:checkout' %}" class="btn amado-btn w-100">Checkout</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

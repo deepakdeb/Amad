@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<div class="single-product-area section-padding-100 clearfix">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12 col-lg-7">
+              <div class="single_product_thumb">
+                  <img src="/media/{{object.mainimage}}" style="width:450px">
+              </div>
+          </div>
+          <div class="col-12 col-lg-5">
+              <div class="single_product_desc">
+                  <!-- Product Meta Data -->
+                  <div class="product-meta-data">
+                      <div class="line"></div>
+                      <p class="product-price"><span class="currency">BDT &#2547;</span><span class="num">{{object.price}}</span></p>
+                      
+                          <h6>{{object.name}}</h6>
+                      
+                      <!-- Avaiable -->
+                      <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
+                  </div>
+
+                  <div class="short_overview my-5">
+                      <p>{{object.detail_text|linebreaks}}</p>
+                  </div>
+
+                
+                    <a href="{% url 'App_Order:add' pk=object.pk %}"><button type="submit" name="addtocart" value="5" class="btn amado-btn">Add to cart</button> </a>
+                
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

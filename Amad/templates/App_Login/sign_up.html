@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} Create New Account {% endblock %}
+{% block body_block %}
+<div style="margin: 10px auto; text-align: left; width: 800px;">
+    <div class="messages mt-2">
+        {% if messages %}
+          {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{message.tags}}{% endif %}" role="alert">
+              {{message}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+<h2>Create New Account:</h2>
+<form method="POST">
+{{ form|crispy }}
+{% csrf_token %}
+<button type="submit" class="btn btn-success btn-sm">Create Account</button>
+</form>
+<br>
+<p>Already have an account? <a style="color: blue;" href="{% url 'App_Login:login' %}">Login Here</a></p>
+</div>
+{% endblock %}
